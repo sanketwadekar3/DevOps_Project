@@ -73,7 +73,7 @@ jobs:
         with:
           images: ${{ env.DOCKERHUB_USERNAME }}/${{ matrix.image }}
           tags: |
-            type=raw,value=${{ github.sha }}
+            type=sha,format=short,prefix=
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and publish image
