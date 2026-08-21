@@ -9,7 +9,7 @@ image:
 containerPort: 3001
 
 serviceMonitor:
-  enabled: true
+  enabled: false
   namespace: monitoring
   labels:
     release: kube-prometheus-stack
