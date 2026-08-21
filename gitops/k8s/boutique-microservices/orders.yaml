@@ -1,0 +1,22 @@
+# Values for the order history service.
+nameOverride: orders
+
+image:
+  repository: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/orders
+  tag: 1ebec3729cd10fe1eeac6f0858fba58e2da07956
+  pullPolicy: IfNotPresent
+
+containerPort: 3005
+
+env:
+  - name: NODE_ENV
+    value: development
+  - name: PORT
+    value: "3005"
+  - name: DATABASE_URL
+    valueFrom:
+      secretKeyRef:
+        name: boutique-secrets
+        key: ORDERS_DB_URL
+  - name: PRODUCTS_SERVICE_URL
+    value: "http://product-service:3003"

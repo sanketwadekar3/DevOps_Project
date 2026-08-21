@@ -1,0 +1,10 @@
+# Argo CD Helm values matching the previous Terraform configuration.
+# The UI remains internal; use kubectl port-forward to access it locally.
+
+server:
+  service:
+    type: ClusterIP
+
+configs:
+  params:
+    server.insecure: true

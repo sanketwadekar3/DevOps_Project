@@ -1,0 +1,20 @@
+{{- if .Values.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "boutique-services.name" . }}
+  namespace: {{ .Values.serviceMonitor.namespace | default "monitoring" }}
+  labels:
+    {{- toYaml .Values.serviceMonitor.labels | nindent 4 }}
+spec:
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app: {{ include "boutique-services.name" . }}
+  endpoints:
+    - port: http
+      path: {{ .Values.serviceMonitor.path | default "/metrics" }}
+      interval: {{ .Values.serviceMonitor.interval | default "15s" }}
+{{- end }}

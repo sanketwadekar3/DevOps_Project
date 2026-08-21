@@ -1,0 +1,23 @@
+{{- $service := default dict .Values.service }}
+{{- if or (not (hasKey $service "enabled")) $service.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "boutique-services.name" . }}
+  labels:
+    {{- include "boutique-services.labels" . | nindent 4 }}
+  {{- with $service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ $service.type | default "ClusterIP" }}
+  selector:
+    app: {{ include "boutique-services.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  ports:
+    - name: http
+      protocol: TCP
+      port: {{ $service.port | default .Values.containerPort }}
+      targetPort: {{ $service.targetPort | default "http" }}
+{{- end }}

@@ -1,0 +1,20 @@
+# Values for the product catalog service.
+nameOverride: product-service
+
+image:
+  repository: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/product-service
+  tag: 1ebec3729cd10fe1eeac6f0858fba58e2da07956
+  pullPolicy: IfNotPresent
+
+containerPort: 3003
+
+env:
+  - name: NODE_ENV
+    value: development
+  - name: PORT
+    value: "3003"
+  - name: DATABASE_URL
+    valueFrom:
+      secretKeyRef:
+        name: boutique-secrets
+        key: PRODUCTS_DB_URL

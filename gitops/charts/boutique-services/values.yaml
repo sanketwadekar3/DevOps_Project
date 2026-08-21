@@ -1,0 +1,50 @@
+# Values for one microservice release.
+# Override this file with a service-specific file from:
+# gitops/k8s/boutique-microservices/
+
+# Kubernetes object name. The Helm release name is used when omitted.
+nameOverride: ""
+
+replicaCount: 1
+
+image:
+  repository: ""
+  tag: ""
+  pullPolicy: IfNotPresent
+
+# The application container port. The Service uses this port by default.
+containerPort: 8080
+
+env: []
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 8080
+  targetPort: http
+  annotations: {}
+
+# Optional Prometheus Operator ServiceMonitor for this release.
+serviceMonitor:
+  enabled: false
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+  path: /metrics
+  interval: 15s
+
+resources: {}
+livenessProbe: {}
+readinessProbe: {}
+
+serviceAccount:
+  create: false
+  name: ""
+  automount: false
+  annotations: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80

@@ -1,0 +1,33 @@
+# Values for the API gateway service.
+nameOverride: gateway
+
+image:
+  repository: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/gateway
+  tag: 1ebec3729cd10fe1eeac6f0858fba58e2da07956
+  pullPolicy: IfNotPresent
+
+containerPort: 3001
+
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+  path: /metrics
+  interval: 15s
+
+env:
+  - name: NODE_ENV
+    value: development
+  - name: PORT
+    value: "3001"
+  - name: AUTH_SERVICE_URL
+    value: "http://auth:3002"
+  - name: PRODUCTS_SERVICE_URL
+    value: "http://product-service:3003"
+  - name: ORDER_SERVICE_URL
+    value: "http://order-service:3004"
+  - name: ORDERS_SERVICE_URL
+    value: "http://orders:3005"
+  - name: USERS_SERVICE_URL
+    value: "http://user-service:3006"

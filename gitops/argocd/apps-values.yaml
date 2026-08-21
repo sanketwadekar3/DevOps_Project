@@ -1,0 +1,114 @@
+# Values for the argo/argocd-apps chart.
+# Install this after the argo/argo-cd chart has created the Argo CD CRDs.
+
+applications:
+  # Manages the database, namespace, Secrets, and platform resources.
+  boutique:
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/sanketwadekar3/DevOps_Project.git
+      targetRevision: main
+      path: gitops
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: boutique
+    syncPolicy: {}
+
+  auth:
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/sanketwadekar3/DevOps_Project.git
+      targetRevision: main
+      path: gitops/charts/boutique-services
+      helm:
+        releaseName: auth
+        valueFiles:
+          - ../../k8s/boutique-microservices/auth.yaml
+    destination: { server: "https://kubernetes.default.svc", namespace: boutique }
+    syncPolicy: {}
+
+  gateway:
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/sanketwadekar3/DevOps_Project.git
+      targetRevision: main
+      path: gitops/charts/boutique-services
+      helm:
+        releaseName: gateway
+        valueFiles:
+          - ../../k8s/boutique-microservices/gateway.yaml
+    destination: { server: "https://kubernetes.default.svc", namespace: boutique }
+    syncPolicy: {}
+
+  order-service:
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/sanketwadekar3/DevOps_Project.git
+      targetRevision: main
+      path: gitops/charts/boutique-services
+      helm:
+        releaseName: order-service
+        valueFiles:
+          - ../../k8s/boutique-microservices/order-service.yaml
+    destination: { server: "https://kubernetes.default.svc", namespace: boutique }
+    syncPolicy: {}
+
+  orders:
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/sanketwadekar3/DevOps_Project.git
+      targetRevision: main
+      path: gitops/charts/boutique-services
+      helm:
+        releaseName: orders
+        valueFiles:
+          - ../../k8s/boutique-microservices/orders.yaml
+    destination: { server: "https://kubernetes.default.svc", namespace: boutique }
+    syncPolicy: {}
+
+  product-service:
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/sanketwadekar3/DevOps_Project.git
+      targetRevision: main
+      path: gitops/charts/boutique-services
+      helm:
+        releaseName: product-service
+        valueFiles:
+          - ../../k8s/boutique-microservices/product-service.yaml
+    destination: { server: "https://kubernetes.default.svc", namespace: boutique }
+    syncPolicy: {}
+
+  user-service:
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/sanketwadekar3/DevOps_Project.git
+      targetRevision: main
+      path: gitops/charts/boutique-services
+      helm:
+        releaseName: user-service
+        valueFiles:
+          - ../../k8s/boutique-microservices/user-service.yaml
+    destination: { server: "https://kubernetes.default.svc", namespace: boutique }
+    syncPolicy: {}
+
+  frontend:
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/sanketwadekar3/DevOps_Project.git
+      targetRevision: main
+      path: gitops/charts/boutique-services
+      helm:
+        releaseName: frontend
+        valueFiles:
+          - ../../k8s/boutique-microservices/frontend.yaml
+    destination: { server: "https://kubernetes.default.svc", namespace: boutique }
+    syncPolicy: {}

@@ -1,0 +1,55 @@
+{{- $hpa := default dict .Values.autoscaling }}
+{{- $sa := default dict .Values.serviceAccount }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "boutique-services.name" . }}
+  labels:
+    {{- include "boutique-services.labels" . | nindent 4 }}
+spec:
+  {{- if not $hpa.enabled }}
+  replicas: {{ .Values.replicaCount | default 1 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ include "boutique-services.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        {{- include "boutique-services.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ if $sa.create }}{{ default (include "boutique-services.name" .) $sa.name }}{{ else }}{{ default "default" $sa.name }}{{ end }}
+      containers:
+        - name: {{ include "boutique-services.name" . }}
+          image: "{{ required "image.repository is required" .Values.image.repository }}:{{ required "image.tag is required" .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - name: http
+              containerPort: {{ required "containerPort is required" .Values.containerPort }}
+              protocol: TCP
+          {{- with .Values.env }}
+          env:
+            {{- range . }}
+            - name: {{ .name }}
+              {{- if hasKey . "value" }}
+              value: {{ .value | quote }}
+              {{- end }}
+              {{- with .valueFrom }}
+              valueFrom:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
