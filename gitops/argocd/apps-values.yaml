@@ -13,7 +13,10 @@ applications:
     destination:
       server: https://kubernetes.default.svc
       namespace: boutique
-    syncPolicy: {}
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
 
   auth:
     namespace: argocd
@@ -27,7 +30,10 @@ applications:
         valueFiles:
           - ../../k8s/boutique-microservices/auth.yaml
     destination: { server: "https://kubernetes.default.svc", namespace: boutique }
-    syncPolicy: {}
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
 
   gateway:
     namespace: argocd
@@ -41,7 +47,10 @@ applications:
         valueFiles:
           - ../../k8s/boutique-microservices/gateway.yaml
     destination: { server: "https://kubernetes.default.svc", namespace: boutique }
-    syncPolicy: {}
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
 
   order-service:
     namespace: argocd
@@ -55,7 +64,10 @@ applications:
         valueFiles:
           - ../../k8s/boutique-microservices/order-service.yaml
     destination: { server: "https://kubernetes.default.svc", namespace: boutique }
-    syncPolicy: {}
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
 
   orders:
     namespace: argocd
@@ -69,7 +81,10 @@ applications:
         valueFiles:
           - ../../k8s/boutique-microservices/orders.yaml
     destination: { server: "https://kubernetes.default.svc", namespace: boutique }
-    syncPolicy: {}
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
 
   product-service:
     namespace: argocd
@@ -83,7 +98,10 @@ applications:
         valueFiles:
           - ../../k8s/boutique-microservices/product-service.yaml
     destination: { server: "https://kubernetes.default.svc", namespace: boutique }
-    syncPolicy: {}
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
 
   user-service:
     namespace: argocd
@@ -97,7 +115,10 @@ applications:
         valueFiles:
           - ../../k8s/boutique-microservices/user-service.yaml
     destination: { server: "https://kubernetes.default.svc", namespace: boutique }
-    syncPolicy: {}
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
 
   frontend:
     namespace: argocd
@@ -111,4 +132,7 @@ applications:
         valueFiles:
           - ../../k8s/boutique-microservices/frontend.yaml
     destination: { server: "https://kubernetes.default.svc", namespace: boutique }
-    syncPolicy: {}
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
