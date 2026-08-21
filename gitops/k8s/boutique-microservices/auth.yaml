@@ -2,8 +2,8 @@
 nameOverride: auth
 
 image:
-  repository: 
-  tag: 
+  repository: sanketwadekar3/auth-service
+  tag: 4ae78e3
   pullPolicy: IfNotPresent
 
 containerPort: 3002

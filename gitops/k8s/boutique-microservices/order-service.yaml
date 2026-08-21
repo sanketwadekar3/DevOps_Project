@@ -2,8 +2,8 @@
 nameOverride: order-service
 
 image:
-  repository: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/order-service
-  tag: 1ebec3729cd10fe1eeac6f0858fba58e2da07956
+  repository: sanketwadekar3/order-service
+  tag: 4ae78e3
   pullPolicy: IfNotPresent
 
 containerPort: 3004
