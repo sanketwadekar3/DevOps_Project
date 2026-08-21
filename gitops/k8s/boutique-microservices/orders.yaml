@@ -3,7 +3,7 @@ nameOverride: orders
 
 image:
   repository: sanketwadekar3/orders-service
-  tag: 4ae78e3
+  tag: b7d0a24
   pullPolicy: IfNotPresent
 
 containerPort: 3005

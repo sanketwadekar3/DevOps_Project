@@ -3,7 +3,7 @@ nameOverride: frontend
 
 image:
   repository: sanketwadekar3/boutique-frontend
-  tag: 4ae78e3
+  tag: b7d0a24
   pullPolicy: IfNotPresent
 
 containerPort: 3000
