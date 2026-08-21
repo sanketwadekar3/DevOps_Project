@@ -5,11 +5,10 @@ namespace: boutique
 
 resources:
   - namespace.yml
-  - secrets.yml
   - k8s/database/statefulset.yml
   - k8s/database/service.yml
   - k8s/database/restore-job.yml
-  - k8s/grafana-dashboard.yml
+  # - k8s/grafana-dashboard.yml
 
 configMapGenerator:
   - name: boutique-db-dump
