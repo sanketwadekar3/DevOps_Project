@@ -1,0 +1,2 @@
+# Local Kubernetes secrets; keep real credentials out of Git.
+/gitops/secrets.yml
