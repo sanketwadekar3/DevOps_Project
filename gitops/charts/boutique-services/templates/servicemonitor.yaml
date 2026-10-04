@@ -4,8 +4,10 @@ kind: ServiceMonitor
 metadata:
   name: {{ include "boutique-services.name" . }}
   namespace: {{ .Values.serviceMonitor.namespace | default "monitoring" }}
+  {{- with .Values.serviceMonitor.labels }}
   labels:
-    {{- toYaml .Values.serviceMonitor.labels | nindent 4 }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   namespaceSelector:
     matchNames:

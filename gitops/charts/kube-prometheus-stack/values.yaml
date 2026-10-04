@@ -1,0 +1,53 @@
+# Overrides for the kube-prometheus-stack dependency.
+# All values are nested under the dependency name.
+
+kube-prometheus-stack:
+  # --- Prometheus ---
+  prometheus:
+    prometheusSpec:
+      # Only scrape ServiceMonitors that carry this label.
+      serviceMonitorSelector:
+        matchLabels:
+          release: kube-prometheus-stack
+
+      # Retain metrics for 7 days (suitable for dev/Kind).
+      retention: 7d
+
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          memory: 512Mi
+
+  grafana:
+    # Credentials are read from an existing Kubernetes Secret.
+    # Create it before deployment:
+    #   kubectl create secret generic grafana -n monitoring \
+    #     --from-literal=username=admin --from-literal=password=<your-password>
+    admin:
+      existingSecret: grafana
+      userKey: username
+      passwordKey: password
+
+    service:
+      type: ClusterIP
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        memory: 256Mi
+
+  # --- Alertmanager (disabled for local dev) ---
+  alertmanager:
+    enabled: false
+
+  # --- Node Exporter ---
+  nodeExporter:
+    enabled: true
+
+  # --- Kube State Metrics ---
+  kubeStateMetrics:
+    enabled: true

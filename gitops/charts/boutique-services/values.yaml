@@ -26,7 +26,7 @@ service:
 
 # Optional Prometheus Operator ServiceMonitor for this release.
 serviceMonitor:
-  enabled: false
+  enabled: true
   namespace: monitoring
   labels:
     release: kube-prometheus-stack

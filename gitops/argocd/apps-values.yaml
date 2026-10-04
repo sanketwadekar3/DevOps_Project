@@ -2,6 +2,27 @@
 # Install this after the argo/argo-cd chart has created the Argo CD CRDs.
 
 applications:
+  # Prometheus + Grafana observability stack.
+  kube-prometheus-stack:
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/sanketwadekar3/DevOps_Project.git
+      targetRevision: main
+      path: gitops/charts/kube-prometheus-stack
+      helm:
+        releaseName: kube-prometheus-stack
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: monitoring
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+        - CreateNamespace=true
+        - ServerSideApply=true
+
   # Manages the database, namespace, Secrets, and platform resources.
   boutique:
     namespace: argocd
